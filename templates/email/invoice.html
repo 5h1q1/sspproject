@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Charity Invoice</title>
+</head>
+<body>
+    <h1>Invoice</h1>
+    <p>Dear {{ charity.get_first_name() }} {{ charity.get_last_name() }},</p>
+    <p>Thank you for your charity application. Below is the invoice details:</p>
+    <ul>
+        <li>Charity Organization: {{ charity.get_charity_name() }}</li>
+        <li>Date of Collection: {{ charity.get_date_joined() }}</li>
+        <li>Remarks: {{ charity.get_remarks() }}</li>
+        <!-- Add other details as needed -->
+    </ul>
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+{% extends "includes/base(Dashboard).html" %}
+{% block title %}Library Loan System - Retrieve Charity Applications{% endblock %}
+{% block content %}
+<h1 class="display-4">Retrieve Charity Applications</h1>
+<div>
+  {% if count == 0 %}
+  <p>There are no Charity.</p>
+  {% elif count == 1 %}
+  <p>There is 1 Charity.</p>
+  {% else %}
+  <p>There are {{ count }} Charities.</p>
+  {% endif %}
+</div>
+<div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Charity ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Charity Org</th>
+        <th>Gender</th>
+        <th>Email</th>
+        <th>Date Made</th>
+        <th>Remarks</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for charity in charity_list %}
+        <tr>
+          <td>{{ charity.get_charity_id() }}</td>
+          <td>{{ charity.get_first_name() }}</td>
+          <td>{{ charity.get_last_name() }}</td>
+          <td>{{ charity.get_charity_name() }}</td>
+          <td>{{ charity.get_gender() }}</td>
+          <td>{{ charity.get_email() }}</td>
+          <td>{{ charity.get_date_joined() }}</td>
+          <td>{{ charity.get_remarks() }}</td>
+          <td><a href="/UpdateCharity/{{charity.get_charity_id()}}" class="btn btn-warning">Update</a></td>
+          <td>
+          <form action="{{url_for('delete_Charity', id=charity.get_charity_id())}}" method="POST">
+            <input type="submit" value="Delete" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete {{charity.get_first_name()}} {{charity.get_last_name()}}?');">
+          </form>
+          </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

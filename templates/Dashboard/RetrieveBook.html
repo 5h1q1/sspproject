@@ -1,0 +1,60 @@
+{% extends "includes/base(Dashboard).html" %}
+{% block title %}Afterwords - Retrieve Books{% endblock %}
+
+{% block content %}
+  <h1 class="display-4">Retrieve Book</h1>
+  <div>
+    {% if remaining_seats is defined %}
+      <p>Remaining Seats: {{ remaining_seats }}</p>
+    {% endif %}
+  </div>
+  <div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Book ID</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+          <th>Phone Number</th>
+          <th>Party size</th>
+          <th>Date</th>
+          <th>Time slot</th>
+          <th>Comments</th>
+          <th>Booking Status</th>
+          <th>Order</th>
+          <th>Update</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for book in book_list %}
+          <tr>
+            <td>{{ book.get_book_id() }}</td>
+            <td>{{ book.get_first_name() }}</td>
+            <td>{{ book.get_last_name() }}</td>
+            <td>{{ book.get_email() }}</td>
+            <td>{{ book.get_phone_number() }}</td>
+            <td>{{ book.get_party_size() }}</td>
+            <td>{{ book.get_date() }}</td>
+            <td>{{ book.get_time_slot() }}</td>
+            <td>{{ book.get_comments() }}</td>
+            <td>{{ book.get_booking_status() }}</td>
+            <td><a href="/retrieveOrder">Check Order</a></td>
+            <td><a href="/UpdateBook/{{ book.get_book_id() }}" class="btn btn-warning">Update</a></td>
+            <td>
+              <form action="{{ url_for('delete_book', id=book.get_book_id()) }}" method="POST">
+                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete {{ book.get_first_name() }}?');">
+                  Delete
+                </button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+ {% if remaining_seats is defined %}
+    <p>Remaining Seats: {{ remaining_seats }}</p>
+  {% endif %}
+{% endblock %}

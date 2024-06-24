@@ -1,0 +1,26 @@
+{% extends "includes/base(Website).html" %}
+
+{% block title %}AfterWords - Order Confirmation{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="display-4 text-center mb-4">Your Order Has Been Submitted</h1>
+                    <p class="lead text-center">
+                        Thank you for choosing AfterWords! Your order has been successfully submitted.
+                    </p>
+                    <p class="lead text-center">
+                        Have you made a booking yet? <a href="/Book" class="btn btn-primary">Make a Reservation</a>
+                    </p>
+                    <div class="text-center">
+                        <a href="{{ url_for('home', user_id=customer_data.get_user_id()) }}" class="btn btn-primary btn-lg mt-3">Go Back to Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

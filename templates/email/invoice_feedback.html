@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Feedback</title>
+</head>
+<body>
+    <h1>Feedback</h1>
+    <p>Dear {{ feedback.get_first_name() }} {{ feedback.get_last_name() }},</p>
+    <p>
+        Thank you for your feedback, it is greatly appreciated. Please note it may tke 3-5 business days for a reply based on the email.
+        Thank You for your understanding.
+    </p>
+    <ul>
+        <li>Charity Organization: {{ feedback.get_charity_name() }}</li>
+        <!-- Add other details as needed -->
+    </ul>
+
+</body>
+</html>

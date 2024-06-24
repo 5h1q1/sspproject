@@ -1,0 +1,41 @@
+{% extends "includes/base(Dashboard).html" %}
+{% block title %}Afterwords - Order History{% endblock %}
+{% block content %}
+
+<h1>Order History for User ID {{ user_id }}</h1>
+<h4>Order History only updates on relaunch</h4>
+
+<div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Order Id</th>
+                <th>Items & Quantity</th>
+                <th>Total Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if order_history %}
+                {% for order in order_history %}
+                    <tr>
+                        <td>{{ order.order_id }}</td>
+                        <td>
+                            {% for i in range(order.item|length) %}
+                                {{ order.item[i] }} - {{ order.quantity[i] if order.quantity[i] is defined else '' }}
+                                {% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>${{ '{:.2f}'.format(order.total_price) }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="3">
+                        <h3>No order history available</h3>
+                    </td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

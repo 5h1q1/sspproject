@@ -1,0 +1,37 @@
+{% extends "includes/base(Dashboard).html" %}
+{% block title %}AfterWords - Admin Menu{% endblock %}
+{% block content %}
+{% from "includes/_formHelper.html" import render_field %}
+<h1 class="display-4">Admin Menu</h1>
+
+<style>
+    .menu-items {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .menu-item {
+        box-sizing: border-box;
+        width: calc(33.33% - 20px);
+        margin-bottom: 20px;
+    }
+</style>
+
+<div class="menu-items">
+  {% for item, price in item_prices.items() %}
+  <div class="menu-item">
+    <img src="{{ url_for('static', filename='uploads/' + item_images.get(item, 'default_image.jpg') if item_images.get(item) else 'default_image.jpg') }}" alt="{{ item }}" class="menu-image">
+    <p>{{ item }} - ${{ '{:.2f}'.format(price) }}</p>
+    <form method="post" action="{{ url_for('delete_menu_item', item=item) }}" onsubmit="return confirm('Are you sure you want to remove {{ item }} from the menu?')">
+        <button type="submit" class="btn btn-danger">Delete</button>
+    </form>
+  </div>
+  {% endfor %}
+</div>
+
+<a href="{{ url_for('add_menu_item') }}">Add New Item to Menu</a>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+{% endblock %}

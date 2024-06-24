@@ -1,0 +1,45 @@
+{% extends "includes/base(Website).html" %}
+{% block title %}AfterWords - Update Payment Info{% endblock %}
+{% block content %}
+    {% from "includes/_formHelper.html" import render_field %}
+    <div class="container mt-5">
+        <h1>Update Payment Information</h1>
+        <form method="post" action="{{ url_for('update_payment_info', user_id=user_id) }}" class="mt-4">
+            <div class="form-group">
+                {{ render_field(form.card_number, value=customer_data.payment_info.cardNumber if customer_data.payment_info else '', class="form-control", placeholder="Card Number") }}
+            </div>
+            <div class="form-group">
+                {{ render_field(form.cardholder_name, value=customer_data.payment_info.cardholderName if customer_data.payment_info else '', class="form-control", placeholder="Cardholder Name") }}
+            </div>
+            <div class="row g-3">
+                <div class="col" style="display:flex;">
+                    <div class="form-group">
+                        {{ render_field(form.expiry_date, value=customer_data.payment_info.expiryDate if customer_data.payment_info else '', class="form-control", placeholder="MMYY") }}
+                    </div>
+                    <button type="button" class="btn btn-info mr-2" data-toggle="tooltip" data-placement="top" title="Expiry Date formatted as MMYY (E.g. 04/29 = 0429)." style="height: 40px; width: 40px; margin-top: 23px; margin-left: 5px">
+                        ?
+                    </button>
+                </div>
+                <div class="col" style="display:flex;">
+                    <div class="form-group">
+                        {{ render_field(form.cvc, value=customer_data.payment_info.cvc if customer_data.payment_info else '', class="form-control", placeholder="CVC") }}
+                    </div>
+                    <button type="button" class="btn btn-info mr-2" data-toggle="tooltip" data-placement="top" title="Card Verification Code (CVC) is a 3-digit number on the back of your card." style="height: 40px; width: 40px; margin-top: 23px; margin-left: 5px">
+                        ?
+                    </button>
+                </div>
+            </div>
+            <input type="submit" value="Update Information" class="btn btn-primary">
+        </form>
+    </div>
+    <!-- jQuery and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-GLhlTQ8iK9tD+qLx9gA6rFptAOe17E7S5MUEsN0F7Aa2CpPZUnKl2pG9J15aFdz" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyVq+3GPHJ5Oqz1Z4+E2ZlZu6NAf9gHjZ" crossorigin="anonymous"></script>
+    <!-- Your Script -->
+    <script>
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'includes/base(Website).html' %}
+
+{% block content %}
+  <div class="container">
+    <h2>View Profile</h2>
+    <form method="post">
+      <!-- Display customer information using div elements -->
+      <div class="mb-3">
+        <label class="form-label">First Name</label>
+        <div class="form-control">{{ customer.get_first_name() }}</div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Last Name</label>
+        <div class="form-control">{{ customer.get_last_name() }}</div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+        <div class="form-control">{{ customer.get_email() }}</div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Phone Number</label>
+        <div class="form-control">{{ customer.get_phone_number() }}</div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Gender</label>
+        <div class="form-control">{{ customer.get_gender() }}</div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Loyalty Points</label>
+        <div class="form-control">{{ customer.get_loyalty() }}</div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Birthday</label>
+        <div class="form-control">{{ customer.get_age() }}</div>
+      </div>
+
+      <!-- "Edit Profile" button -->
+      <a href="{{ url_for('edit_profile') }}" class="btn btn-primary">Edit Profile</a>
+    </form>
+  </div>
+{% endblock %}

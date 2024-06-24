@@ -1,0 +1,83 @@
+{% extends "includes/base(Dashboard).html" %}
+{% block title %}Retrieve Users{% endblock %}
+
+{% block content %}
+  <h1 class="display-4">List of Customers that Signed Up</h1>
+  <div>
+    {% if customers_list|length == 0 %}
+      <p>There are no users.</p>
+    {% elif customers_list|length == 1 %}
+      <p>There is 1 user.</p>
+    {% else %}
+      <p>There are {{ customers_list|length }} users.</p>
+    {% endif %}
+  </div>
+  <div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+          <th>Phone Number</th>
+          <th>Gender</th>
+          <th>Age</th>
+          <th>Order Details</th>
+          <th>Payment Details</th>
+          <th>Order History</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for customer in customers_list %}
+          <tr>
+            <td>{{ customer.get_user_id() }}</td>
+            <td>{{ customer.get_first_name() }}</td>
+            <td>{{ customer.get_last_name() }}</td>
+            <td>{{ customer.get_email() }}</td>
+            <td>{{ customer.get_phone_number() }}</td>
+            <td>{{ customer.get_gender() }}</td>
+            <td>{{ customer.get_age() }}</td>
+            <td>
+              {% if customer.orders %}
+                {% for order in customer.orders %}
+                  <p>Order ID: {{ order.order_id }}</p>
+                  {% if order.item %}
+                    {% for i in range(order.item|length) %}
+                      <p>{{ order.item[i] }} - {{ order.quantity[i] if order.quantity[i] is defined else '' }}</p>
+                    {% endfor %}
+                    <p>Total Price: ${{ '{:.2f}'.format(order.total_price) }}</p>
+                  {% else %}
+                    <p>No order details available.</p>
+                  {% endif %}
+                  <a href="{{ url_for('edit_order', order_id=order.order_id) }}" class="btn btn-primary">Edit Order</a>
+                {% endfor %}
+              {% else %}
+                <p>No orders available.</p>
+              {% endif %}
+            </td>
+
+            <!-- Display Payment Information -->
+            <td>
+              {% if customer.payment_info %}
+                <p>Card Number: {{ customer.payment_info.cardNumber }}</p>
+                <p>Cardholder Name: {{ customer.payment_info.cardholderName }}</p>
+                <p>Expiry Date: {{ customer.payment_info.expiryDate }}</p>
+                <p>CVC: {{ customer.payment_info.cvc }}</p>
+              {% else %}
+                <p>No payment information available.</p>
+              {% endif %}
+            </td>
+            <td>
+              <a href="{{ url_for('order_history', user_id=customer.get_user_id()) }}" class="btn btn-warning">View Order History</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% if error %}
+    <p class="error"><strong>Error:</strong> {{ error }}</p>
+  {% endif %}
+{% endblock %}

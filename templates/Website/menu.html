@@ -1,0 +1,113 @@
+{% extends "includes/base(Website).html" %}
+
+{% block title %}Afterwords - Menu{% endblock %}
+
+{% block content %}
+    {% from "includes/_formHelper.html" import render_field %}
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-9">
+                <h1 class="display-4">Standard Menu</h1>
+
+                <div class="row">
+                    {% for item, price in item_prices.items() %}
+                        <div class="col-md-4 mb-4">
+                            <div class="menu-item card">
+                                <img src="{{ url_for('static', filename='uploads/' + item_images.get(item, 'default_image.jpg') if item_images.get(item) else 'default_image.jpg') }}" alt="{{ item }}" class="card-img-top">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ item }}</h5>
+                                    <p class="card-text">${{ '{:.2f}'.format(price) }}</p>
+                                    {% if user_id %}
+                                        <form method="post" action="{{ url_for('add_to_cart', item=item, user_id=user_id) }}">
+                                            <button type="submit" class="btn btn-primary">Add to Cart</button>
+                                        </form>
+                                    {% else %}
+                                        <p class="card-text">Login to add to Cart</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            {% if user_id %}
+                <div class="col-md-3">
+                    <div class="sidebar">
+                        <h2 class="mt-5">Shopping Cart</h2>
+                        <ul class="list-group mb-3">
+                            {% for user_id, user_cart in cart.items() %}
+                                {% for item, data in user_cart.items() %}
+                                    <li class="list-group-item">
+                                        {{ item }} - Quantity:
+                                        <form method="post" action="{{ url_for('update_cart', item=item, user_id=user_id) }}" id="update-form-{{ item }}" style="display:inline;">
+                                            <input type="number" name="quantity" value="{{ data['quantity'] }}" min="1" max="10" onchange="submitUpdateForm('{{ item }}')" class="form-control">
+                                            <button type="submit" style="display: none;"></button>
+                                        </form>
+
+                                        - Price: ${{ '{:.2f}'.format(item_prices.get(item, 0) * data['quantity']) }}
+                                        <form method="post" action="{{ url_for('remove_all_from_cart', item=item, user_id=user_id) }}" class="cart-form" onsubmit="return confirm('Are you sure you want to remove {{ item }} from the cart?')">
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
+                                    </li>
+                                {% endfor %}
+                            {% endfor %}
+                        </ul>
+
+                        <h3>Total Price: $<span id="total-price">{{ '{:.2f}'.format(total_price) }}</span></h3>
+
+<form method="post" action="{{ url_for('checkout_with_points_and_redeem', user_id=user_id) }}" class="mt-3" id="loyalty-points-form">
+    <div class="form-group">
+        <label for="loyalty_points">Loyalty Points:</label>
+        <input type="number" name="loyalty_points" id="loyalty_points" class="form-control" min="0" max="{{ customer.get_loyalty() }}" value="0" onchange="updateMaxAndTotalPrice(event)" oninput="validity.valid||(value='0');">
+        <span class="loyalty-points-info">Available Points: {{ customer.get_loyalty() }}</span>
+    </div>
+    <button type="submit" class="btn btn-primary" id="checkout-btn">Checkout</button>
+</form>
+
+                        <script>
+    function updateMax(event) {
+        var loyaltyPointsInput = event.target;
+        var total_price = parseFloat(document.getElementById('total-price').innerText);
+        var loyalty_points = parseFloat(loyaltyPointsInput.value);
+
+        if (loyalty_points > total_price) {
+            loyaltyPointsInput.max = loyalty_points;
+        } else {
+            loyaltyPointsInput.max = total_price;
+        }
+    }
+                            function updateMaxAndTotalPrice(event) {
+    updateMax(event);
+    updateTotalPrice(event);
+}
+</script>
+
+                        <script>
+                            function submitUpdateForm(item) {
+                                document.getElementById('update-form-' + item).submit();
+                            }
+
+                            function updateTotalPrice(event) {
+                                event.preventDefault();
+                                var loyaltyPoints = parseInt(document.getElementById('loyalty_points').value);
+                                var totalPrice = parseFloat({{ total_price }});
+
+                                if (!isNaN(loyaltyPoints) && loyaltyPoints > 0) {
+                                    // Assume 1 loyalty point equals $1 discount
+                                    totalPrice -= loyaltyPoints;
+                                }
+
+                                document.getElementById('total-price').textContent = totalPrice.toFixed(2);
+                            }
+                        </script>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+{% endblock %}

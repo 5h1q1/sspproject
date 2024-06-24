@@ -1,0 +1,54 @@
+<link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename= 'css/bootstrap.min.css')}}">
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <div class="container-fluid">
+      <a href="/Dashboard" class="navbar-brand d-flex align-items-center">
+            <h1 class="m-0 navbar-brand" style="font-size: 3rem;">AfterWords Staff Dashboard</h1>
+      </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/Dashboard">Home</a>
+        </li>
+        {% if session.get('user_role') == "admin" %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+            Retrieve
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/RetrieveCustomer">Customer</a></li>
+            <li><a class="dropdown-item" href="/RetrieveStaff">Staff</a></li>
+            <li><a class="dropdown-item" href="/RetrieveAdmin">Admin</a></li>
+            <li><a class="dropdown-item" href="/RetrieveBook">Booking</a></li>
+            <li><a class="dropdown-item" href="/RetrieveFeedback">Feedback</a></li>
+            <li><a class="dropdown-item" href="/RetrieveCharity">Charity</a></li>
+          </ul>
+        </li>
+          <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">
+            Create
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/admin_menu">Menu</a></li>
+            <li><a class="dropdown-item" href="/StaffSignup">Staff</a></li>
+            <li><a class="dropdown-item" href="/AdminSignup">Admin</a></li>
+          </ul>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="/ViewCustomer">View Customer</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/ViewStaff">View Staff</a>
+        </li>
+        {% endif %}
+        <li class="nav-item">
+          <a class="nav-link" href="/Logout">Logout</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

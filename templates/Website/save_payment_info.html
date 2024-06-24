@@ -1,0 +1,31 @@
+{% extends "includes/base(Website).html" %}
+{% block title %}AfterWords - Saved Payment Info{% endblock %}
+{% block content %}
+{% from "includes/_formHelper.html" import render_field %}
+
+<h2>Saved Payment Information</h2>
+
+{% if payment_info %}
+  <p>Card Number: {{ payment_info.cardNumber }}</p>
+  <p>Cardholder Name: {{ payment_info.cardholderName }}</p>
+  <p>Expiry Date: {{ payment_info.expiryDate }}</p>
+  <p>CVC: {{ payment_info.cvc }}</p>
+
+  <form method="post" action="{{ url_for('update_payment_info', user_id=user_id) }}">
+    <button type="submit">Update Information</button>
+  </form>
+
+<form method="post" action="{{ url_for('delete_payment_info', user_id=user_id) }}">
+
+    <button type="submit" onclick="return confirm('Are you sure you want to delete your saved payment information?')">Delete Payment Information</button>
+</form>
+
+<a href="{{ url_for('checkout', user_id=user_id) }}" class="btn btn-primary">Go Back to Checkout</a>
+
+{% else %}
+<p>No saved payment information available.</p>
+<a href="{{ url_for('checkout', user_id=user_id) }}" class="btn btn-primary">Go Back to Checkout</a>
+
+{% endif %}
+
+{% endblock %}

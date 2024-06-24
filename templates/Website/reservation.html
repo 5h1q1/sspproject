@@ -1,0 +1,48 @@
+{% extends "includes/base(Website).html" %}
+
+{% block title %}Afterwords - Reservation{% endblock %}
+
+{% block content %}
+  <div class="container mt-4 text-center">
+    <img class="w-75" src="{{ url_for('static', filename='img/Afterwords.jpg') }}" alt="Afterwords Image" style="max-width: 500px; max-height: 500px; object-fit: cover; margin: auto;">
+    <h1 class="display-4 mt-3">Reservation</h1>
+
+    <p>
+      Reservation Details: We make every effort to fulfill all requests. Kindly inform us of any specific needs, such as preferred timing or party size, in the comments section of the reservation form. Please be aware that operational constraints may limit our ability to accommodate certain requests at times.
+    </p>
+
+    <p>
+      To ensure efficient service during weekends (Saturdays & Sundays), a one-hour dining limit is in place. This measure aims to minimize waiting times for all patrons, including yourself. Should there be no waiting queue, we would be delighted to extend your dining time!
+    </p>
+
+    <p>
+      Do take note that the reservation is only up to 4 pax.
+    </p>
+
+    <!-- Your "Book Now" button with a link to the booking page -->
+    <a href="/Book" class="btn btn-primary mt-3">Book Now</a>
+  </div>
+
+  <!-- Carousel Section -->
+<div id="carouselExample" class="carousel slide mt-4 mb-4" data-bs-ride="carousel" style="max-width: 600px; margin: auto;">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img class="d-block w-100" src="{{ url_for('static', filename='img/Afterwords6.jpg') }}" alt="Carousel Image 1" style="max-width: 600px; max-height: 600px; object-fit: cover; margin: auto;">
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100" src="{{ url_for('static', filename='img/afterwords7.png') }}" alt="Carousel Image 2" style="max-width: 600px; max-height: 600px; object-fit: cover; margin: auto;">
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100" src="{{ url_for('static', filename='img/afterwords8.jpg') }}" alt="Carousel Image 3" style="max-width: 600px; max-height: 600px; object-fit: cover; margin: auto;">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+{% endblock %}

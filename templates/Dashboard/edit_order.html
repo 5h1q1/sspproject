@@ -1,0 +1,23 @@
+{% extends "includes/base(Dashboard).html" %}
+
+{% block content %}
+  <h2>Edit Order - Order ID: {{ order.order_id }}</h2>
+  <form method="post">
+
+    {% for field in form.items %}
+  <div class="form-group">
+    <p>{{ order.item[loop.index0] }}</p>
+    <div class="quantity-input">
+      {{ field.quantity(value=field.quantity.data, class='form-control') }}
+    </div>
+  </div>
+{% endfor %}
+<div class="form-group">
+    <p class="text-muted">Note: If you enter 0 in the quantity, the item will be removed from the order.</p>
+</div>
+
+    <div class="form-group">
+      <input type="submit" value="Submit" class="btn btn-primary">
+    </div>
+  </form>
+{% endblock %}

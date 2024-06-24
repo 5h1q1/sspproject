@@ -1,0 +1,11 @@
+{% extends "includes/base(Dashboard).html" %}
+{% block title %}Afterwords - Home(Dashboard){% endblock %}
+
+{% block content %}
+    <h1 class="display-4">Home(Dashboard)</h1>
+    {% if user_first_name %}
+        <p>Welcome, {{ user_first_name }} {{ user_last_name }}!</p>
+    {% else %}
+        <p>Hello world!</p>
+    {% endif %}
+{% endblock %}
