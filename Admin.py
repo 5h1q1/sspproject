@@ -3,7 +3,7 @@ import shelve
 from datetime import *
 class Admin(User):
 
-# elgin test lol no its zikri
+# fucking malay
     def __init__(self, first_name, last_name, email, phone_number, password, gender, age, role, address):
         super().__init__(first_name, last_name, email, phone_number, password, gender, age, role)
         self.__address = address
